@@ -1,8 +1,7 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var i;
+let express = require('express'),
+    app = express(),
+    http = require('http').Server(app),
+    io = require('socket.io')(http);
 
 /**
  * Gestion des requêtes HTTP des utilisateurs en leur renvoyant les fichiers du dossier 'public'
@@ -12,24 +11,25 @@ app.use('/', express.static(__dirname + '/public'));
 /**
  * Liste des utilisateurs connectés
  */
-var users = [];
+let users = [];
 
 /**
  * Historique des messages
  */
-var messages = [];
+let messages = [];
 
 /**
  * Liste des utilisateurs en train de saisir un message
  */
-var typingUsers = [];
+let typingUsers = [];
 
 io.on('connection', function (socket) {
 
   /**
    * Utilisateur connecté à la socket
    */
-  var loggedUser;
+  let loggedUser,
+      i
 
   /**
    * Emission d'un événement "user-login" pour chaque utilisateur connecté
@@ -55,13 +55,13 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     if (loggedUser !== undefined) {
       // Broadcast d'un 'service-message'
-      var serviceMessage = {
+      let serviceMessage = {
         text: 'User "' + loggedUser.username + '" disconnected',
         type: 'logout'
       };
       socket.broadcast.emit('service-message', serviceMessage);
       // Suppression de la liste des connectés
-      var userIndex = users.indexOf(loggedUser);
+      let userIndex = users.indexOf(loggedUser);
       if (userIndex !== -1) {
         users.splice(userIndex, 1);
       }
@@ -70,7 +70,7 @@ io.on('connection', function (socket) {
       // Emission d'un 'user-logout' contenant le user
       io.emit('user-logout', loggedUser);
       // Si jamais il était en train de saisir un texte, on l'enlève de la liste
-      var typingUserIndex = typingUsers.indexOf(loggedUser);
+      let typingUserIndex = typingUsers.indexOf(loggedUser);
       if (typingUserIndex !== -1) {
         typingUsers.splice(typingUserIndex, 1);
       }
@@ -82,7 +82,7 @@ io.on('connection', function (socket) {
    */
   socket.on('user-login', function (user, callback) {
     // Vérification que l'utilisateur n'existe pas
-    var userIndex = -1;
+    let userIndex = -1;
     for (i = 0; i < users.length; i++) {
       if (users[i].username === user.username) {
         userIndex = i;
@@ -93,11 +93,11 @@ io.on('connection', function (socket) {
       loggedUser = user;
       users.push(loggedUser);
       // Envoi et sauvegarde des messages de service
-      var userServiceMessage = {
+      let userServiceMessage = {
         text: 'You logged in as "' + loggedUser.username + '"',
         type: 'login'
       };
-      var broadcastedServiceMessage = {
+      let broadcastedServiceMessage = {
         text: 'User "' + loggedUser.username + '" logged in',
         type: 'login'
       };
@@ -143,7 +143,7 @@ io.on('connection', function (socket) {
    * L'utilisateur a arrêter de saisir son message
    */
   socket.on('stop-typing', function () {
-    var typingUserIndex = typingUsers.indexOf(loggedUser);
+    let typingUserIndex = typingUsers.indexOf(loggedUser);
     if (typingUserIndex !== -1) {
       typingUsers.splice(typingUserIndex, 1);
     }

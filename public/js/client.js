@@ -1,6 +1,6 @@
 /*global io*/
 /*jslint browser: true*/
-var socket = io(),
+let socket = io(),
     i,
     hidden = "hidden",
     visibilityChange = "visibilitychange",
@@ -36,7 +36,7 @@ function scrollToBottom() {
  */
 $('#login form').submit(function (e) {
   e.preventDefault();
-  var user = {
+  let user = {
     username : $('#login input').val().trim()
   };
   if (user.username.length > 0) { // Si le champ de connexion n'est pas vide
@@ -54,7 +54,7 @@ $('#login form').submit(function (e) {
  */
 $('#chat form').submit(function (e) {
   e.preventDefault();
-  var message = {
+  let message = {
     text : $('#m').val()
   };
   $('#m').val('');
@@ -95,15 +95,15 @@ socket.on('user-login', function (user) {
  * Déconnexion d'un utilisateur
  */
 socket.on('user-logout', function (user) {
-  var selector = '#users li.' + user.username.replace(/ /g,'');
+  let selector = '#users li.' + user.username.replace(/ /g,'');
   $(selector).remove();
 });
 
 /**
  * Détection saisie utilisateur
  */
-var typingTimer;
-var isTyping = false;
+let typingTimer;
+let isTyping = false;
 
 $('#m').keypress(function () {
   clearTimeout(typingTimer);
@@ -138,7 +138,7 @@ function notifyMe(message) {
   // Voyons si l'utilisateur est OK pour recevoir des notifications
   if (Notification.permission === "granted") {
     // Si c'est ok, créons une notification
-    var notification = new Notification(message);
+    let notification = new Notification(message);
   }
   // Sinon, nous avons besoin de la permission de l'utilisateur
   // Note : Chrome n'implémente pas la propriété statique permission
@@ -153,7 +153,7 @@ function notifyMe(message) {
 
       // Si l'utilisateur est OK, on crée une notification
       if (permission === "granted") {
-        var notification = new Notification(message);
+        let notification = new Notification(message);
       }
     });
   }
