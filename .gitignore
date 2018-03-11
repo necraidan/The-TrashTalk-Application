@@ -8,6 +8,7 @@
 
 # dependencies
 /node_modules
+*/node_modules
 
 # IDEs and editors
 /.idea
@@ -40,5 +41,6 @@ testem.log
 /e2e/*.map
 
 # System Files
+*/.DS_Store
 .DS_Store
 Thumbs.db
