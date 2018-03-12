@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { Message } from '../model/message';
-import { Event } from '../model/event';
 
 import * as socketIo from 'socket.io-client';
+import { Message } from '../model/client-enum';
 
 const SERVER_URL = 'http://localhost:8080';
 
@@ -26,7 +25,7 @@ export class SocketService {
         });
     }
 
-    public onEvent(event: Event): Observable<any> {
+    public onEvent(event): Observable<any> {
         return new Observable<Event>(observer => {
             this.socket.on(event, () => observer.next());
         });

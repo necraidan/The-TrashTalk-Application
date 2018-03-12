@@ -1,8 +1,6 @@
 {
-  "files": [
-    "src/*.ts",
-    "src/model/*.ts"
-  ],
-  "compilerOptions": {
-    "target": "es5"
-  }
+    "files": ["./src/*.ts", "./src/model/*.ts"],
+    "compilerOptions": {
+        "target": "es5"
+    }
+}

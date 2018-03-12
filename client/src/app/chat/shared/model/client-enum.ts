@@ -10,3 +10,20 @@ export enum Event {
     CONNECT = 'connect',
     DISCONNECT = 'disconnect'
 }
+
+export interface User {
+    id?: number;
+    name?: string;
+    avatar?: string;
+}
+
+export interface Message {
+    from?: User;
+    content?: any;
+    action?: Action;
+}
+
+export enum DialogUserType {
+    NEW,
+    EDIT
+}
